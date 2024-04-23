@@ -1,0 +1,31 @@
+- hosts: localhost
+  connection: local
+  vars:
+    resource_group: myResourceGroup
+    webapp_name: myfirstAwesomeWebApp
+    plan_name: myAppServicePlan
+    location: eastus
+  tasks:
+    - name: Ensure resource group exists
+      azure_rm_resourcegroup:
+        name: myResourceGroup
+        location: East US
+      register: rg_result
+    - debug:
+        var: rg_result
+    - name: Create App Service on Linux with Java Runtime
+      azure_rm_webapp:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp_name }}"
+        plan:
+          resource_group: "{{ resource_group }}"
+          name: "{{ plan_name }}"
+          is_linux: true
+          sku: S1
+          number_of_workers: 1
+        frameworks:
+          - name: "java"
+            version: "8"
+            settings:
+              java_container: tomcat
+              java_container_version: 9.0

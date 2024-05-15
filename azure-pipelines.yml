@@ -16,7 +16,7 @@ steps:
   
 - script: |
     # Run Ansible playbook to create Azure App Service
-    ansible-playbook create-linux-app-svc.yml
+    ansible-playbook create-rg.yml
   displayName: 'Run Ansible Playbook'
   env:
     AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
